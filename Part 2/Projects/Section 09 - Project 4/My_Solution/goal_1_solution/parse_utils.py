@@ -2,6 +2,7 @@ import csv
 from datetime import datetime
 from collections import namedtuple
 
+
 def csv_parser(fname, *, delimiter=",", quotechar='"', include_header=False):
     with open(fname) as f:
         reader = csv.reader(f, delimiter=delimiter, quotechar=quotechar)
@@ -24,11 +25,12 @@ def extract_field_names(fname):
 
 def create_named_tuple_class(fname, class_name):
     """
-    Creates a namedtuple whose field names correspond to the file that it
-    comes from.
+    Creates a namedtuple whose field names correspond to the column headings 
+    in the file that it comes from.
     """
     fields = extract_field_names(fname)
     return namedtuple(class_name, fields)
+
 
 def iter_file(fname, class_name, parser):
     """
@@ -38,5 +40,5 @@ def iter_file(fname, class_name, parser):
     nt_class = create_named_tuple_class(fname, class_name)
     reader = csv_parser(fname)
     for row in reader:
-        parsed_data = (parse_fn(value) for value, parse_fn in zip(row, parser))
+        parsed_data = (parse_fn(value) for value, parse_fn in zip(row, parser)) 
         yield nt_class(*parsed_data)

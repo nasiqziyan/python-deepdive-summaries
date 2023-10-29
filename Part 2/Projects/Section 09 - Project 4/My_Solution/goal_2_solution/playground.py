@@ -1,14 +1,15 @@
 import constants
 import parse_utils
+import itertools
 
-# see a sample of what is in each file
-for fname in constants.fnames:
-    print(fname)
-    with open(fname) as f:
-        print(next(f), end="")
-        print(next(f), end="")
-        print(next(f), end="")
-    print()
+# # see a sample of what is in each file
+# for fname in constants.fnames:
+#     print(fname)
+#     with open(fname) as f:
+#         print(next(f), end="")
+#         print(next(f), end="")
+#         print(next(f), end="")
+#     print()
 
 # # try out the csv reader
 # for fname in constants.fnames:
@@ -46,3 +47,17 @@ for fname in constants.fnames:
 #         print(next(file_iter))
 #     print()
 
+
+# parse_utils.iter_combined_plain_tuple(
+#     constants.fnames, constants.class_names, constants.parsers, constants.compress_fields
+# )
+
+# # try create_combo_named_tuple_class function
+# nt = parse_utils.create_combo_named_tuple_class(constants.fnames, constants.compress_fields)
+# print(nt._fields)
+
+data_iter = parse_utils.iter_combined(
+    constants.fnames, constants.class_names, constants.parsers, constants.compress_fields
+)
+for row in itertools.islice(data_iter, 5):
+    print(row)
