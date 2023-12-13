@@ -147,3 +147,15 @@ def iter_combined(fnames, class_names, parsers, compress_fields):
 def filter_iter_combined(fnames, class_names, parsers, compress_fields, *, key=None):
     iter_combo = iter_combined(fnames, class_names, parsers, compress_fields)
     yield from filter(key, iter_combo)
+
+# ------------- GOAL 4 ---------------
+
+def group_data(fnames, class_names, parsers, compress_fields, filter_key, group_key):
+
+    data = filter_iter_combined(fnames, class_names, parsers, compress_fields,
+                                                     key=filter_key)
+
+    sorted_data = sorted(data, key=group_key)
+    groups = itertools.groupby(sorted_data, key=group_key)
+    group_counts = ((group[0], len(list(group[1]))) for group in groups)
+    return sorted(group_counts, key=lambda row:row[1], reverse=True)
