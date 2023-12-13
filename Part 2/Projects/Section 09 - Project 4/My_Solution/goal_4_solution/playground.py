@@ -65,39 +65,25 @@ for row in itertools.islice(data_iter, 5):
 
 # ------------- GOAL 3 ---------------
 
-print("-------------------------------")
+print('-------------------------------')
 
-filtered_iter = parse_utils.filter_iter_combined(
-    constants.fnames,
-    constants.class_names,
-    constants.parsers,
-    constants.compress_fields,
-    key=lambda row: row.ssn == "100-53-9824",
-)
+filtered_iter = parse_utils.filter_iter_combined(constants.fnames, constants.class_names, constants.parsers,
+                                                 constants.compress_fields, key=lambda row: row.ssn == "100-53-9824")
 for row in filtered_iter:
     print(row)
 
-print("-------------------------------")
+print('-------------------------------')
 
-filtered_iter = parse_utils.filter_iter_combined(
-    constants.fnames,
-    constants.class_names,
-    constants.parsers,
-    constants.compress_fields,
-    key=lambda row: row.language == "Icelandic",
-)
+filtered_iter = parse_utils.filter_iter_combined(constants.fnames, constants.class_names, constants.parsers,
+                                                 constants.compress_fields, key=lambda row: row.language == "Icelandic")
 for row in filtered_iter:
     print(row)
 
-print("------------ ACTUAL SOLUTION --------------")
+print('------------ ACTUAL SOLUTION --------------')
 
 cutoff_date = datetime(2018, 3, 1)
-filtered_iter = parse_utils.filter_iter_combined(
-    constants.fnames,
-    constants.class_names,
-    constants.parsers,
-    constants.compress_fields,
-    key=lambda row: row.last_updated >= cutoff_date,
-)
+filtered_iter = parse_utils.filter_iter_combined(constants.fnames, constants.class_names, constants.parsers,
+                                                 constants.compress_fields,
+                                                 key=lambda row: row.last_updated >= cutoff_date)
 for row in filtered_iter:
     print(row)
