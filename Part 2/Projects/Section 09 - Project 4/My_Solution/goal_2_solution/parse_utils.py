@@ -35,7 +35,7 @@ def create_named_tuple_class(fname, class_name):
 
 def create_combo_named_tuple_class(fnames, compress_fields):
     """
-    Create a combo namedtuple whose field names correspond the *desired* column headings
+    Create a combo namedtuple whose field names correspond to the *desired* column headings
     in the file that it comes from. The *desired* column headings are found in
     `compress_fields`.
     """
@@ -78,9 +78,15 @@ def iter_file(fname, class_name, parser):
 #     believe me.
 #     """
 #     tuples = [iter_file(fname, class_name, parser) for fname, class_name, parser in zip(fnames, class_names, parsers)]
-#     # -> [Person(name, age), Employment(role, salary), Vehicle(car, make)]
+#     # tuples is a list of 4 generators, each one corresponding to a different csv file in our data folder.
+#     # -> [
+#           (Person(name='a', age=1), Person(name='b', age=2), ...),
+#           (Employment(role='A', salary=1), Employment(role='B', salary=2), ...),
+#           (Vehicle(car='A', make='A'), Vehicle(car='B', make='B'), ...)
+#          ]
 
 #     zipped_tuples = zip(*tuples)
+      # we can now generate the first item from each generator
 #     # next(zipped_tuples) -> (Person(name='a', age=1), Employment(role='A', salary=1), Vehicle(car='A', make='A'))
 #     # next(zipped_tuples) -> (Person(name='b', age=2), Employment(role='B', salary=2), Vehicle(car='B', make='B'))
 
@@ -106,6 +112,7 @@ def iter_combined_plain_tuple(fnames, class_names, parsers, compress_fields):
     # iteration of the loop.
     compress_fields = list[itertools.chain(*compress_fields)]
     tuples = [iter_file(fname, class_name, parser) for fname, class_name, parser in zip(fnames, class_names, parsers)]
+
     zipped_tuples = zip(*tuples)
 
     merged_iter = (itertools.chain(*zipped_tuple) for zipped_tuple in zipped_tuples)
